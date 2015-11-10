@@ -91,8 +91,8 @@ class memq {
     }
 
     private function _lock() {
-        // standard spin lock - expire in 2 seconds
-        while ($this->memc->add($this->lock_key, '1', 0, 2)) {
+        // standard spin lock - expire in 2 seconds   if can`t add lock_key
+        while (!$this->memc->add($this->lock_key, '1', 0, 2)) {
             usleep(100);
         }
     }
